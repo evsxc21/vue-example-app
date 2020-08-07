@@ -11,6 +11,26 @@ pool:
 
 steps:
 - checkout: self
+- task: SonarQubePrepare@4
+  displayName: SonarqubeInitial
+  inputs:
+    SonarQube: 'sonarqube'
+    scannerMode: 'CLI'
+    configMode: 'manual'
+    cliProjectKey: vuejs-foundational-app
+    cliProjectName: vuejs-foundational-app
+    cliSources: src
+    extraProperties: |
+      sonar.java.source=.
+      sonar.java.binaries=.
+      sonar.language='js'
+      sonar.javascript.file.suffixes='.js'
+- task: SonarQubeAnalyze@4
+  displayName: SonarAnalysis
+- task: SonarQubePublish@4
+  displayName: SonarCodeQualityCheck
+  inputs:
+    pollingTimeoutSec: '300'
 - task: NodeTool@0
   inputs:
     versionSpec: '10.x'
