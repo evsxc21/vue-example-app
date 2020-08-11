@@ -44,6 +44,11 @@ steps:
   inputs:
     command: 'custom'
     customCommand: 'run build'
+- task: Npm@1
+  displayName: 'application insights'
+  inputs:
+    command: 'custom'
+    customCommand: 'install applicationinsights-native-metrics'
 - script: |
     dir
   displayName: 'list cwd contents (verify build)'
